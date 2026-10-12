@@ -1,0 +1,14 @@
+node_modules
+.next
+.git
+.gitignore
+deploy
+docs
+data/*.db-shm
+data/*.db-wal
+public/uploads
+.env
+.env.*
+!.env.example
+npm-debug.log*
+pnpm-debug.log*

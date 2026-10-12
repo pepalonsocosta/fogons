@@ -1,0 +1,22 @@
+[Unit]
+Description=Fogons Docker deploy agent
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+User=fogons-deploy
+Group=docker
+WorkingDirectory=/opt/fogons/deploy-agent
+EnvironmentFile=/opt/fogons/deploy-agent/.env
+ExecStart=/usr/bin/node /opt/fogons/deploy-agent/server.mjs
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+ReadWritePaths=/opt/fogons
+
+[Install]
+WantedBy=multi-user.target

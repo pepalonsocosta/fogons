@@ -1,0 +1,218 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f5f2ec;
+  --foreground: #24231f;
+  --surface: #fffdf9;
+  --surface-muted: #ebe7df;
+  --ink-muted: #706d66;
+  --line: rgba(36, 35, 31, 0.12);
+  --accent: #c65d3b;
+  --accent-strong: #a9482e;
+  --success: #557763;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-body), ui-sans-serif, sans-serif;
+  --font-serif: var(--font-display), Georgia, serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid rgba(198, 93, 59, 0.45);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: rgba(198, 93, 59, 0.22);
+}
+
+.page-reveal {
+  animation: page-reveal 520ms var(--ease-out) both;
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 220ms;
+  animation-timing-function: var(--ease-out);
+}
+
+.step-transition {
+  animation: step-transition 220ms var(--ease-out) both;
+}
+
+.quantity-change {
+  animation: quantity-change 180ms var(--ease-out) both;
+}
+
+.stagger-1 { animation-delay: 40ms; }
+.stagger-2 { animation-delay: 80ms; }
+.stagger-3 { animation-delay: 120ms; }
+
+.admin-input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 0.875rem;
+  background: var(--surface);
+  padding: 0.75rem 0.875rem;
+  color: var(--foreground);
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.admin-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(198, 93, 59, 0.1);
+}
+
+.admin-primary-button,
+.admin-secondary-button,
+.admin-icon-button {
+  border-radius: 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  transition: background-color 150ms ease, color 150ms ease, transform 150ms ease;
+}
+
+.admin-primary-button {
+  background: var(--accent);
+  color: white;
+  padding: 0.875rem 1.25rem;
+}
+
+.admin-primary-button:hover { background: var(--accent-strong); }
+.admin-primary-button:disabled { cursor: wait; opacity: 0.6; }
+
+.admin-secondary-button {
+  background: var(--surface-muted);
+  color: #39352e;
+  padding: 0.75rem 1rem;
+}
+
+.admin-secondary-button:hover { background: #ded9d0; }
+
+.admin-icon-button {
+  align-items: center;
+  align-self: end;
+  background: var(--surface-muted);
+  color: var(--ink-muted);
+  display: inline-flex;
+  height: 2.75rem;
+  justify-content: center;
+  width: 2.75rem;
+}
+
+.admin-icon-button:hover { background: #f2dcdc; color: #994444; }
+
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-shimmer::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.48) 50%, transparent 80%);
+  content: "";
+  transform: translateX(-100%);
+  animation: skeleton-shimmer 1.6s linear infinite;
+}
+
+@keyframes skeleton-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes page-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes step-transition {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes quantity-change {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .recipe-card:hover .recipe-card__image {
+    transform: scale(1.04);
+  }
+
+  .recipe-card:hover .recipe-card__arrow {
+    transform: translateX(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .skeleton-shimmer::after {
+    animation: none;
+    opacity: 0;
+  }
+}
